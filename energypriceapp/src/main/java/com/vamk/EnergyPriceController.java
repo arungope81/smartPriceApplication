@@ -77,7 +77,7 @@ public class  EnergyPriceController {
 	private Map<String, Object> createPriceMap(String timestamp, double price) {
 		Map<String, Object> priceMap = new HashMap<>();
 
-		priceMap.put(" Java timestamp", timestamp);
+		priceMap.put("Java timestamp", timestamp);
 		priceMap.put("price", price);
 		priceMap.put("unit", "snt/kWh");
 		priceMap.put("WeatherCondition", decideWeather(Gb_i, Gd_i, H_sun, threshold));
@@ -86,6 +86,28 @@ public class  EnergyPriceController {
 		else {
 			priceMap.put("Buy/Sell", "Sell");
 		}
+		 Map<String, Object> weatherParms = decideWeather();
+		
+		 
+		 if(weatherParms.size()>0) {
+			 priceMap.put("name",weatherParms.get("name"));
+			 priceMap.put("LocalTime",weatherParms.get("LocalTime"));
+			 priceMap.put("region",weatherParms.get("region"));
+			 priceMap.put("country",weatherParms.get("country"));
+			 priceMap.put("latitude",weatherParms.get("latitude"));
+			 priceMap.put("longitude",weatherParms.get("longitude"));
+			 priceMap.put("wind_mph",weatherParms.get("wind_mph"));
+			 priceMap.put("wind_kph",weatherParms.get("wind_kph"));
+			 priceMap.put("wind_degree",weatherParms.get("wind_degree"));
+			 priceMap.put("wind_dir",weatherParms.get("wind_dir"));
+			 priceMap.put("pressure_mb",weatherParms.get("pressure_mb"));
+			 priceMap.put("humidity",weatherParms.get("humidity"));
+			 priceMap.put("cloud",weatherParms.get("cloud"));
+			 priceMap.put("feelslike_c",weatherParms.get("feelslike_c"));
+			 priceMap.put("Condtion",weatherParms.get("Condtion"));
+		 } 
+			
+		
 		return priceMap;
 	}
 
@@ -97,6 +119,17 @@ public class  EnergyPriceController {
 		} else {
 			return "Cloudy";
 		}
+	}
+	
+	public static Map<String, Object> decideWeather() {
+		
+		WeatherAPI weatehrApi = new WeatherAPI();
+		Map<String, Object> weatherMap = new HashMap<String, Object>();
+		
+		weatherMap = weatehrApi.getWetaherDetails();
+		
+		return weatherMap;
+		
 	}
 
 

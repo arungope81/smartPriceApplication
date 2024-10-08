@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Price Dashboard</title>
+</head>
+<body>
+    <h1>Current Energy Prices</h1>
+    
+    <h2>Energy Price Now</h2>
+    <p><strong>Location:</strong> <span id="now-location"></span></p>
+    <p><strong>Price:</strong> <span id="now-price"></span> snt/kWh</p>
+    <p><strong>Weather:</strong> <span id="now-weather"></span></p>
+    <p><strong>Humidity:</strong> <span id="now-humidity"></span>%</p>
+    <p><strong>Local Time:</strong> <span id="now-time"></span></p>
+    
+    <h2>Energy Price Next Hour</h2>
+    <p><strong>Location:</strong> <span id="next-location"></span></p>
+    <p><strong>Price:</strong> <span id="next-price"></span> snt/kWh</p>
+    <p><strong>Weather:</strong> <span id="next-weather"></span></p>
+    <p><strong>Humidity:</strong> <span id="next-humidity"></span>%</p>
+    <p><strong>Local Time:</strong> <span id="next-time"></span></p>
+    
+    <a href="https://www.weatherapi.com">Source weatherapi.com</a>
+
+    <script>
+        // Fetch data from the API
+        fetch('/energy-prices') // Update with the correct API endpoint
+            .then(response => response.json())
+            .then(data => {
+                // Access "Energy price now" data
+                const now = data["Energy price now"];
+                document.getElementById('now-location').textContent = now.name + ", " + now.region;
+                document.getElementById('now-price').textContent = now.price;
+                document.getElementById('now-weather').textContent = now.WeatherCondition;
+                document.getElementById('now-humidity').textContent = now.humidity;
+                document.getElementById('now-time').textContent = now.LocalTime;
+
+                // Access "Energy price next hour" data
+                const nextHour = data["Energy price next hour"];
+                document.getElementById('next-location').textContent = nextHour.name + ", " + nextHour.region;
+                document.getElementById('next-price').textContent = nextHour.price;
+                document.getElementById('next-weather').textContent = nextHour.WeatherCondition;
+                document.getElementById('next-humidity').textContent = nextHour.humidity;
+                document.getElementById('next-time').textContent = nextHour.LocalTime;
+            })
+            .catch(error => {
+                console.error('Error fetching the data:', error);
+            });
+    </script>
+</body>
+</html>

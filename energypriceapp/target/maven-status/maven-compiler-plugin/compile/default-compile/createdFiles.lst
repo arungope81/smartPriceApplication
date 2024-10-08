@@ -1,2 +1,9 @@
+com\vamk\EnergyFactor.class
+com\vamk\WeatherAPI.class
+com\vamk\Condition.class
+com\vamk\Current.class
 com\vamk\EnergyPriceController.class
+com\vamk\EnergyPricePridiction.class
+com\vamk\Forecast.class
 com\vamk\EnergyPriceApplication.class
+com\vamk\Location.class
